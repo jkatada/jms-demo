@@ -4,7 +4,7 @@
 
 2. `http://localhost:8161/admin`へアクセス (admin/admin)
 
-3. "TodoMessageQueue"というキューを作る
+3. "TodoMessageQueue"というキューと、"TodoMessageTopic"というTopicを作る
 
 4. Tomcatのcontext.xmlに下記を追加
    ```xml
@@ -20,6 +20,12 @@
         type="org.apache.activemq.command.ActiveMQQueue"
         factory="org.apache.activemq.jndi.JNDIReferenceFactory"
         physicalName="TodoMessageQueue"/>
+    
+    <Resource name="jms/topics/TodoMessageTopic"
+        auth="Container"
+        type="org.apache.activemq.command.ActiveMQTopic"
+        factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+        physicalName="TodoMessageTopic"/>
     ```
     
 5. `http://localhost:8080/jms-demo`にアクセス

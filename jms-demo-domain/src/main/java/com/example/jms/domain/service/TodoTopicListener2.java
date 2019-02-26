@@ -4,11 +4,11 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TodoListener {
+public class TodoTopicListener2 {
 
-	@JmsListener(destination = "jms/queue/TodoMessageQueue")
+	@JmsListener(destination = "jms/topics/TodoMessageTopic", containerFactory="jmsTopicListenerContainerFactory")
 	public void receive(String todo) {
-		System.out.println("Recive1!: " + todo);
+		System.out.println("Recive topic2!: " + todo);
 	}
 	
 }

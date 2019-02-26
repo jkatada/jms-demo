@@ -38,5 +38,11 @@
         type="org.apache.activemq.command.ActiveMQQueue"
         factory="org.apache.activemq.jndi.JNDIReferenceFactory"
         physicalName="TodoMessageQueue"/>
+
+    <Resource name="jms/topics/TodoMessageTopic"
+        auth="Container"
+        type="org.apache.activemq.command.ActiveMQTopic"
+        factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+        physicalName="TodoMessageTopic"/>
     
 </Context>

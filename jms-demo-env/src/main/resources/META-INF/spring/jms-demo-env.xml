@@ -54,7 +54,7 @@
         <property name="resourceRef" value="true" />
     </bean>
 
-    <!-- JMS Producer -->
+    <!-- JMS Producer for Queue -->
     <bean id="cachingConnectionFactory"
         class="org.springframework.jms.connection.CachingConnectionFactory">
         <property name="targetConnectionFactory" ref="connectionFactory" />
@@ -72,5 +72,22 @@
     <jms:annotation-driven />
     <jms:listener-container factory-id="jmsListenerContainerFactory"
         destination-resolver="destinationResolver" concurrency="1" />
+    
+    
+    <!-- JMS Producer for Topic -->
+    <bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="cachingConnectionFactory" />
+        <property name="destinationResolver" ref="destinationResolver" />
+        <property name="pubSubDomain" value="true" />
+    </bean>
+    <bean id="jmsTopicMessagingTemplate" class="org.springframework.jms.core.JmsMessagingTemplate">
+        <property name="jmsTemplate" ref="jmsTopicTemplate" />
+    </bean>
+    
+    <!-- JMS Consumer for Topic-->
+    <jms:listener-container factory-id="jmsTopicListenerContainerFactory"
+        destination-resolver="destinationResolver" concurrency="1" 
+        destination-type="topic"/>
+
 
 </beans>
