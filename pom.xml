@@ -187,7 +187,5 @@
     <module>jms-demo-env</module>
     <module>jms-demo-domain</module>
     <module>jms-demo-web</module>
-    <module>jms-demo-initdb</module>
-    <module>jms-demo-selenium</module>
   </modules>
 </project>

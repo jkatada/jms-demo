@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-    xsi:schemaLocation="
-        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:jms="http://www.springframework.org/schema/jms" xmlns:jee="http://www.springframework.org/schema/jee"
+    xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
     ">
 
-    <bean id="dateFactory" class="org.terasoluna.gfw.common.date.jodatime.DefaultJodaTimeDateFactory" />
+
+    <bean id="dateFactory"
+        class="org.terasoluna.gfw.common.date.jodatime.DefaultJodaTimeDateFactory" />
 
     <bean id="realDataSource" class="org.apache.commons.dbcp2.BasicDataSource"
         destroy-method="close">
@@ -29,8 +32,10 @@
 
     <jdbc:initialize-database data-source="dataSource"
         ignore-failures="ALL">
-        <jdbc:script location="classpath:/database/${database}-schema.sql" encoding="UTF-8" />
-        <jdbc:script location="classpath:/database/${database}-dataload.sql" encoding="UTF-8" />
+        <jdbc:script location="classpath:/database/${database}-schema.sql"
+            encoding="UTF-8" />
+        <jdbc:script location="classpath:/database/${database}-dataload.sql"
+            encoding="UTF-8" />
     </jdbc:initialize-database>
 
     <bean id="transactionManager"
@@ -38,4 +43,34 @@
         <property name="dataSource" ref="dataSource" />
         <property name="rollbackOnCommitFailure" value="true" />
     </bean>
+
+    <!-- JMS共通 -->
+    <jee:jndi-lookup id="connectionFactory" jndi-name="jms/ConnectionFactory" />
+    <!-- <bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory"> -->
+    <!-- <constructor-arg value="tcp://localhost:61616" /> -->
+    <!-- </bean> -->
+    <bean id="destinationResolver"
+        class="org.springframework.jms.support.destination.JndiDestinationResolver">
+        <property name="resourceRef" value="true" />
+    </bean>
+
+    <!-- JMS Producer -->
+    <bean id="cachingConnectionFactory"
+        class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="targetConnectionFactory" ref="connectionFactory" />
+        <property name="sessionCacheSize" value="1" />
+    </bean>
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="cachingConnectionFactory" />
+        <property name="destinationResolver" ref="destinationResolver" />
+    </bean>
+    <bean id="jmsMessagingTemplate" class="org.springframework.jms.core.JmsMessagingTemplate">
+        <property name="jmsTemplate" ref="jmsTemplate" />
+    </bean>
+
+    <!-- JMS Consumer -->
+    <jms:annotation-driven />
+    <jms:listener-container factory-id="jmsListenerContainerFactory"
+        destination-resolver="destinationResolver" concurrency="1" />
+
 </beans>

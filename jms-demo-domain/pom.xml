@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>jms-demo-domain</artifactId>
     <packaging>jar</packaging>
@@ -49,16 +50,16 @@
         <!-- == End TERASOLUNA == -->
 
         <!-- == Begin Database == -->
-<!--         <dependency> -->
-<!--             <groupId>org.postgresql</groupId> -->
-<!--             <artifactId>postgresql</artifactId> -->
-<!--             <scope>test</scope> -->
-<!--         </dependency> -->
-<!--         <dependency> -->
-<!--             <groupId>com.oracle.jdbc</groupId> -->
-<!--             <artifactId>ojdbc7</artifactId> -->
-<!--             <scope>test</scope> -->
-<!--         </dependency> -->
+        <!-- <dependency> -->
+        <!-- <groupId>org.postgresql</groupId> -->
+        <!-- <artifactId>postgresql</artifactId> -->
+        <!-- <scope>test</scope> -->
+        <!-- </dependency> -->
+        <!-- <dependency> -->
+        <!-- <groupId>com.oracle.jdbc</groupId> -->
+        <!-- <artifactId>ojdbc7</artifactId> -->
+        <!-- <scope>test</scope> -->
+        <!-- </dependency> -->
         <!-- == End Database == -->
 
         <!-- == Begin Unit Test == -->
@@ -87,30 +88,34 @@
             <artifactId>tomcat-embed-el</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--  REMOVE THIS LINE IF YOU USE Spring Test DBUnit
-        <dependency>
-            <groupId>org.dbunit</groupId>
-            <artifactId>dbunit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.springtestdbunit</groupId>
-            <artifactId>spring-test-dbunit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        -->
+        <!-- REMOVE THIS LINE IF YOU USE Spring Test DBUnit <dependency> 
+            <groupId>org.dbunit</groupId> <artifactId>dbunit</artifactId> <scope>test</scope> 
+            </dependency> <dependency> <groupId>com.github.springtestdbunit</groupId> 
+            <artifactId>spring-test-dbunit</artifactId> <scope>test</scope> </dependency> -->
         <!-- == End Unit Test == -->
 
         <!-- == Begin Coding Support == -->
-        <!--
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        -->
+        <!-- <dependency> <groupId>org.projectlombok</groupId> <artifactId>lombok</artifactId> 
+            <scope>provided</scope> </dependency> -->
         <!-- == End Coding Support == -->
 
+        <!-- JMS -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jms</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-broker</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-spring</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
