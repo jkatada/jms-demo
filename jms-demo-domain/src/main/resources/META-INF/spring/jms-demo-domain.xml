@@ -23,9 +23,16 @@
         class="org.terasoluna.gfw.common.exception.ResultMessagesLoggingInterceptor">
           <property name="exceptionLogger" ref="exceptionLogger" />
     </bean>
+    
+    <bean id="jmsListenerInterceptor"
+        class="com.example.jms.domain.service.JmsListenerInterceptor">
+    </bean>
+    
     <aop:config>
         <aop:advisor advice-ref="resultMessagesLoggingInterceptor"
                      pointcut="@within(org.springframework.stereotype.Service)" />
+        <aop:advisor advice-ref="jmsListenerInterceptor"
+                     pointcut="@annotation(org.springframework.jms.annotation.JmsListener)" />
     </aop:config>
 
 </beans>
